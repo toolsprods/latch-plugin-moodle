@@ -21,13 +21,17 @@
  *
  * @package   profilefield_latch
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v2.1 or later
- * @author     Latch Team - ElevenPaths <elevenpaths@elevenpaths.com>
- * @copyright 2014 onwards ElevenPaths (https://www.elevenpaths.com)
+ * @author     TU Latch Developer Team
+ * @copyright 2024 Telefónica Innovación Digital S.L.U. (https://latch.tu.com)
  */
 
-require_once($CFG->libdir.'/latch-sdk/Latch.php');
-require_once($CFG->libdir.'/latch-sdk/LatchResponse.php');
-require_once($CFG->libdir.'/latch-sdk/Error.php');
+require_once($CFG->libdir.'/latch-sdk/src/Latch.php');
+require_once($CFG->libdir.'/latch-sdk/src/LatchResponse.php');
+require_once($CFG->libdir.'/latch-sdk/src/Error.php');
+
+use Telefonica\Latch\LatchResponse as LatchResponse;
+use Telefonica\Latch\Latch as Latch;
+use Telefonica\Latch\Error as Error;
 
 class profile_field_latch extends profile_field_base {
 
@@ -56,7 +60,7 @@ class profile_field_latch extends profile_field_base {
             // Create form for unpairing
             $checkbox = &$mform->addElement('advcheckbox', $this->inputname, get_string('profilefield_unpair', 'profilefield_latch', array(), array(0)));
         }
-       $mform->setType($this->inputname, PARAM_TEXT);
+        $mform->setType($this->inputname, PARAM_TEXT);
     }
 
     /**
@@ -76,15 +80,14 @@ class profile_field_latch extends profile_field_base {
                 $pairResponse = $api->pair($usernew->{$this->inputname});
                 $responseData = $pairResponse->getData();
                 $responseError = $pairResponse->getError();
-                if (!empty($responseData)) {
+                if (!empty($responseData) && property_exists($responseData, "accountId")) {
                     $accountId = "latch_".$responseData->{"accountId"}; //Prefix added to avoid checkbox checked with accountIds starting with '1'
                 }
                 if (empty($accountId)) {
-                    //NOK PAIRING
-                    if ($responseError->getCode() == 206){
-                      $errors[$this->inputname] = get_string('profilefield_tokeninvalid', 'profilefield_latch');
+                    if ($responseError && $responseError->getCode() == 206) {
+                        $errors[$this->inputname] = get_string('profilefield_tokeninvalid', 'profilefield_latch');
                     }else{
-                      $errors[$this->inputname] = get_string('profilefield_invalidconfig', 'profilefield_latch');
+                        $errors[$this->inputname] = get_string('profilefield_invalidconfig', 'profilefield_latch');
                     }
                 }
             }else{

@@ -20,8 +20,8 @@
  *
  * @package   profilefield_latch
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v2.1 or later
- * @author     Latch Team - ElevenPaths <elevenpaths@elevenpaths.com>
- * @copyright 2014 onwards ElevenPaths (https://www.elevenpaths.com)
+ * @author     TU Latch Developer Team
+ * @copyright 2024 Telefónica Innovación Digital S.L.U. (https://latch.tu.com)
  */
 
 $string['pluginname'] = 'Latch';

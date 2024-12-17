@@ -21,16 +21,21 @@
  *
  * @package    auth_latch
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v2.1 or later
- * @author     Latch Team - ElevenPaths <elevenpaths@elevenpaths.com>
- * @copyright 2014 onwards ElevenPaths (https://www.elevenpaths.com)
+ * @author     TU Latch Developer Team
+ * @copyright 2024 Telefónica Innovación Digital S.L.U. (https://latch.tu.com)
  */
 
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir.'/authlib.php');
-require_once($CFG->libdir.'/latch-sdk/Latch.php');
-require_once($CFG->libdir.'/latch-sdk/LatchResponse.php');
-require_once($CFG->libdir.'/latch-sdk/Error.php');
+require_once($CFG->libdir.'/latch-sdk/src/Latch.php');
+require_once($CFG->libdir.'/latch-sdk/src/LatchResponse.php');
+require_once($CFG->libdir.'/latch-sdk/src/Error.php');
+
+use Telefonica\Latch\LatchResponse as LatchResponse;
+use Telefonica\Latch\Latch as Latch;
+use Telefonica\Latch\Error as Error;
+
 /**
  * Auth plugin to allow Latch integration with moodle auth.
  */
@@ -74,10 +79,14 @@ class auth_plugin_latch extends auth_plugin_base {
 
 
         if (!empty($appid) && !empty($secret)){
-            if (isset($latch_accountid->data) && !empty($latch_accountid->data)){
-                $accountId = substr($latch_accountid->data, 6); //Since accountIDs are stored like "latch_accIdHere" we need to remove "latch_" from the str
-                $statusResponse = $api->status($accountId);
-                $status = $statusResponse->getData()->{"operations"}->{$appid}->{"status"};
+            if (!empty($latch_accountid->data)){
+                //Since accountIDs are stored like "latch_accIdHere" we need to remove "latch_" from the str
+                $pattern = "/latch_(.+)/";
+                if (preg_match($pattern, $latch_accountid->data, $matches)) {
+                    $accountId = $matches[1];
+                    $statusResponse = $api->status($accountId);
+                    $status = $statusResponse->getData()->{"operations"}->{$appid}->{"status"};
+                }
                 if ($status == 'on'){
                     //TODO: OTP
                 }else if ($status == 'off'){

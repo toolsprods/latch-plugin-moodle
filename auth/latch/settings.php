@@ -15,14 +15,31 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Spanish strings
+ * Settings for the Latch authentication plugin.
  *
- * @package  auth_latch
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v2.1 or later
- * @author     TU Latch Developer Team
+ * @package    auth_latch
  * @copyright 2024 Telefónica Innovación Digital S.L.U. (https://latch.tu.com)
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['auth_latchdescription'] = 'Plugin de integracion del servicio Latch';
-$string['auth_latchconfig'] = 'Introduce aquí tu Application ID y secreto. Si no tienes unos, por favor visita <a target="_blank" href="https://latch.tu.com">nuestra web</a>';
-$string['pluginname'] = 'Latch';
+defined('MOODLE_INTERNAL') || die;
+
+if ($ADMIN->fulltree) {
+    // App ID setting.
+    $settings->add(new admin_setting_configtext(
+        'auth_latch/appId',
+        get_string('appid', 'auth_latch'),
+        get_string('appid_desc', 'auth_latch'),
+        '',
+        PARAM_TEXT
+    ));
+
+    // App Secret setting.
+    $settings->add(new admin_setting_configtext(
+        'auth_latch/appSecret',
+        get_string('appsecret', 'auth_latch'),
+        get_string('appsecret_desc', 'auth_latch'),
+        '',
+        PARAM_TEXT
+    ));
+}

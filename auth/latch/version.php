@@ -19,13 +19,13 @@
  *
  * @package  auth_latch
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v2.1 or later
- * @author     Latch Team - ElevenPaths <elevenpaths@elevenpaths.com>
- * @copyright 2014 onwards ElevenPaths (https://www.elevenpaths.com)
+ * @author     TU Latch Developer Team
+ * @copyright 2024 Telefónica Innovación Digital S.L.U. (https://latch.tu.com)
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2014030600;        // The current plugin version (Date: YYYYMMDDXX)
-$plugin->requires  = 2012062500;        // Requires this Moodle version (2.3)
+$plugin->version   = 2024112000;        // The current plugin version (Date: YYYYMMDDXX)
+$plugin->requires  = 2024111500;        // Requires this Moodle version (4.5+)
 $plugin->component = 'auth_latch';         // Full name of the plugin (used for diagnostics)
 

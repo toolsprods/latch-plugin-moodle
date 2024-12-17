@@ -19,10 +19,10 @@
  *
  * @package  auth_latch
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v2.1 or later
- * @author     Latch Team - ElevenPaths <elevenpaths@elevenpaths.com>
- * @copyright 2014 onwards ElevenPaths (https://www.elevenpaths.com)
+ * @author     TU Latch Developer Team
+ * @copyright 2024 Telefónica Innovación Digital S.L.U. (https://latch.tu.com)
  */
 
 $string['auth_latchdescription'] = 'Latch integration plugin';
-$string['auth_latchconfig'] = 'Introduce here your Application Id and your secret. If you dont have ones, please visit <a target="_blank" href="https://latch.elevenpaths.com">our website</a> for further information.';
+$string['auth_latchconfig'] = 'Introduce here your Application Id and your secret. If you dont have ones, please visit <a target="_blank" href="https://latch.tu.com">our website</a> for further information.';
 $string['pluginname'] = 'Latch';
